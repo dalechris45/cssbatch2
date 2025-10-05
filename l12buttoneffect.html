@@ -6,6 +6,7 @@
 
             body{
                 height: 100vh;
+                font-family: sans-serif;
                 
                 display: flex;
                 justify-content: center;
@@ -50,11 +51,20 @@
                 left:0;
                 top:0;
 
+                /* default value 0 */
+                z-index: -1;
+
                 transform: rotate(90deg);
                 transform-origin: right top;
 
-                /* default 0 */
-                z-index: -1;
+                /* transform: rotate(90deg);
+                transform-origin: right bottom; */
+
+                /* transform: rotate(-90deg);
+                transform-origin: left bottom; */
+
+                /* transform: rotate(90deg);
+                transform-origin: left top; */
 
                 transition: all 1s;
             } 

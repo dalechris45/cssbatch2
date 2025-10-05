@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Swipe Button</title>
+        <style type="text/css">
+
+            body{
+                height: 100vh;
+                font-family: sans-serif;
+
+                display: flex;
+                justify-content: center;
+                align-items: center; 
+
+                margin:0;
+                overflow: hidden;
+            }
+
+            a{
+                text-decoration: none;
+                color: #351435;
+                font-size: 45px;
+                border:5px solid #555;
+                padding: 40px 80px;
+
+                position:relative;
+
+                transition: all 1s;
+
+                overflow: hidden;
+            }
+
+            a::before{
+                content: '';
+
+                width: 100%;
+                height: 100%;
+
+                background-color:#351435;
+                
+                position: absolute;
+                left:0;
+                top:0;
+
+                z-index: -1;
+
+                transform: translateY(100%);
+                /* transform: translateY(-100%); */
+                /* transform: translate(0%,100%); */
+                /* transform: translateX(100%); */
+                /* transform: translateX(-100%); */
+
+                transition: all 1s;
+            }
+
+            a:hover{
+                color:#fff;
+            }
+
+            a:hover::before{
+                /* transform: translateY(0%); */
+                transform:translate(0%);
+                /* transform: translate(0%,0%); */
+            }
+
+        </style>
+    </head>
+
+    <body>
+
+        <a href="#">Hover Me</a>        
+        <!-- <a href="javascript:void(0)">Hover Me</a>         -->
+
+    </body>
+</html>

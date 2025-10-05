@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Button Glowing Effect</title>
+
+        <style type="text/css">
+            body{
+                font-family: sans-serif;
+                height: 100vh;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                margin: 0;
+                overflow:hidden;
+            }
+            
+            a{
+                text-decoration: none;
+                color: gold;
+                font-size: 45px;
+                /* border: 4px solid gold; */
+                border-radius: 5px;
+
+                padding:40px 80px; 
+                
+                position: relative;
+
+                transition: all 1s;
+
+                overflow: hidden;
+
+                /* Gemini AI Code */
+                box-shadow: 0 0 10px gold; 
+                
+            }
+
+            a:hover{
+                background-color:gold;
+                color:#fff;
+                border: none;
+                border-radius: 5px;
+
+                /* Gemini AI Code */
+                box-shadow: 0 0 15px gold, 0 0 25px gold; 
+            } 
+
+            a::before{
+                content: '';
+                
+                width:100%;
+                height:40%;
+                /* background-color: red; */
+
+                    /* From https://css.glass */
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                /* From https://css.glass */
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 16px;
+                box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
+                border: 1px solid rgba(255, 255, 255, 0.3);
+                
+                position: absolute;
+                top:0;
+                left:0;
+
+                transform: translate(-100%) rotate(45deg);
+                z-index: 1;
+
+                transition: all 1s;
+            }
+
+            a:hover::before{
+                transform: translate(100%) rotate(45deg);
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <a href="#">Hover Me</a>
+        <!-- <a href="javascript:void(0);">Hover Me</a> -->
+        
+    </body>
+</html>

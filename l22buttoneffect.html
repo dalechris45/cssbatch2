@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Layers Swaping From Left to Right</title>
+        <style type="text/css">
+            body{
+                font-family: sans-serif;
+                height: 100vh;
+                
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                margin: 0;
+                overflow:hidden;
+            }
+
+            a{
+                text-decoration: none;
+                background-color: gold;
+                color:gold;
+                font-size: 30px;
+                letter-spacing: 4px ;
+                text-transform: uppercase;
+                border:4px solid gold;
+                padding:40px 80px;
+
+                position: relative;
+
+                overflow: hidden;
+            }
+
+            a::before{
+                content:'button';
+
+                width:100%;
+                height:100%;
+
+                background:red;
+
+                position: absolute;
+                left: 0;
+                top:0;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                transition: all 0.5s;
+            }
+
+            a::after{
+                content: 'thank';
+
+                width:100%;
+                height:100%;
+
+                background: red;
+
+                position: absolute;
+                left:-100%;
+                top:0;
+                
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                transform: scale(0) rotateY(5deg);
+                transition: all 0.5s;
+            }
+
+            a:hover::before{
+                left:100%;
+                transform: scale(0) rotateY(1turn);
+            }
+
+            a:hover::after{
+                left:0%;
+                transform: scale(1) rotateY(400grad);
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <a href="#">Hover Me</a>
+        <!-- <a href="javascript:void(0):">Hover Me</a> -->
+    </body>
+</html>

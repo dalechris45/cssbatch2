@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Text Scaling Button Effect</title>
+        <style type="text/css">
+
+            body{
+                font-family: sans-serif;
+                /* background-color: gold; */
+                height:100vh;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                margin:0;
+                overflow:hidden;
+            }
+
+            a{
+                text-decoration: none;
+                color:gold;
+                font-size: 45px;
+                border: 4px solid gold;
+                padding: 40px 80px;
+
+                position: relative;
+                overflow: hidden;
+            }
+
+            a::before{
+                content: 'Thank You';
+
+                width: 100%;
+                height:100%;
+                background-color:gold;
+                color: #fff;
+
+                position: absolute;
+                left:0;
+                top:0;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                transform: scale(5);
+                opacity: 0;
+
+                transition: all 0.5s;
+            }
+
+            a:hover::before{
+                transform: scale(1);
+                opacity: 1;
+            }
+            
+        </style>
+    </head>
+    <body>
+
+        <a href="#">Hover Me</a>
+        <!-- <a href="javascript:void(0);">Hover Me</a> -->
+        
+    </body>
+</html>

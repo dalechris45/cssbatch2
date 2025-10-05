@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rotating 3 Layes Button Effect</title>
+
+        <style type="text/css">
+
+            body{
+                font-family: sans-serif;
+                height:100vh;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                margin: 0;
+                overflow: hidden;
+            }
+
+            a{
+                text-decoration: none;
+                background: gold;
+                color: #fff;
+                font-size: 45px;
+                padding:20px 40px;
+
+                position: relative;
+            }
+
+            a:before{
+                content:'button';
+
+                width:100%;
+                height:100%;
+                background-color: tomato;
+                text-transform: uppercase;
+
+                position: absolute;
+                left:0;
+                top: 0;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                transform: rotateX(270deg);
+                transform-origin: top;
+
+                transition: all 0.5s;
+            }
+
+            a::after{
+                content: 'button';
+                width: 100%;
+                height:100%;
+
+                background-color: red;
+                text-transform: uppercase;
+
+                position: absolute;
+                left:0;
+                top:0;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                transform: rotateX(270deg);
+                transform-origin:top;
+
+                transition: all 0.5s;
+                transition-delay: 0.25s;
+            }
+
+            a:hover::before,a:hover::after{
+                transform: rotateX(0deg);
+            }
+
+        </style>
+    </head>
+
+    <body>
+
+        <a href="#">Hover Me</a>
+        <!-- <a href="javascript:void(0);">Hover Me</a> -->
+        
+    </body>
+</html>

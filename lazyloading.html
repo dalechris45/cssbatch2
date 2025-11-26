@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Lazy Loading Demo — HTML + CSS + JS</title>
+    <style>
+      /* Basic layout */
+      body {
+        font-family: system-ui, -apple-system, Segoe UI, Roboto,
+          "Helvetica Neue", Arial;
+        margin: 0;
+        background: #f6f7fb;
+        color: #111;
+      }
+      header {
+        padding: 2rem;
+        text-align: center;
+      }
+      .grid {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      /* Image card */
+      .card {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 6px 18px rgba(12, 20, 40, 0.06);
+        min-height: 220px;
+        display: flex;
+        flex-direction: column;
+      }
+      .meta {
+        padding: 0.75rem 1rem;
+      }
+
+      /* Placeholder / skeleton */
+      .skeleton {
+        background: linear-gradient(90deg, #eee, #fff, #eee);
+        background-size: 200% 100%;
+        animation: shimmer 2.4s linear infinite;
+      }
+      @keyframes shimmer {
+        from {
+          background-position: -200% 0;
+        }
+        to {
+          background-position: 200% 0;
+        }
+      }
+
+      /* Blur-up effect & transition */
+      img {
+        display: block;
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        transform-origin: center center;
+        transition: filter 0.6s ease, opacity 0.5s ease;
+        filter: blur(12px);
+        opacity: 0;
+      }
+      img.loaded {
+        filter: blur(0);
+        opacity: 1;
+      }
+
+      /* For background-image lazy example */
+      .bg {
+        height: 220px;
+        background-size: cover;
+        background-position: center;
+        transition: filter 0.6s ease, opacity 0.45s ease;
+        filter: blur(12px);
+        opacity: 0;
+      }
+      .bg.loaded {
+        filter: blur(0);
+        opacity: 1;
+      }
+
+      /* Tiny utility */
+      .hint {
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: 0.25rem;
+      }
+      footer {
+        max-width: 1100px;
+        margin: 2rem auto 6rem;
+        text-align: center;
+        color: #666;
+      }
+
+      /* Responsive tweaks */
+      @media (max-width: 520px) {
+        img,
+        .bg {
+          height: 180px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Lazy loading examples (native + IntersectionObserver)</h1>
+      <p class="hint">
+        Open this file locally or serve it. Below: native
+        <code>loading="lazy"</code>, JS-driven lazy loading, and
+        background-image lazy-loading.
+      </p>
+    </header>
+
+    <main class="grid">
+      <!-- 1) Native lazy loading (supported in modern browsers) -->
+      <article class="card">
+        <div class="skeleton" style="height: 220px" id="native-skel"></div>
+        <!-- Use a small placeholder src for instant paint, then the real large image with loading="lazy" -->
+        <img
+          alt="Mountains"
+          src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'><rect width='100%' height='100%' fill='%23e9eef8' /></svg>"
+          data-full="https://images.unsplash.com/photo-1501785888041-af3ef285b470?q=80&w=1600&auto=format&fit=crop"
+          loading="lazy"
+          class="native"
+        />
+        <div class="meta">
+          <strong>Native lazy (loading="lazy")</strong>
+          <div class="hint">
+            Browser handles it. Good for <code>&lt;img&gt;</code> and
+            <code>&lt;iframe&gt;</code>.
+          </div>
+        </div>
+      </article>
+
+      <!-- 2) IntersectionObserver for <img> (supports older browsers + more control) -->
+      <article class="card">
+        <div class="skeleton" style="height: 220px" id="io-skel"></div>
+        <img
+          alt="Forest"
+          data-src="https://images.unsplash.com/photo-1500835556837-99ac94a94552?q=80&w=1600&auto=format&fit=crop"
+          src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1200' height='800'><rect width='100%' height='100%' fill='%23f3f6f8' /></svg>"
+          class="lazy-io"
+        />
+        <div class="meta">
+          <strong>JS IntersectionObserver</strong>
+          <div class="hint">
+            Loads when nearing the viewport. Gives fade/blur-up control.
+          </div>
+        </div>
+      </article>
+
+      <!-- 3) Background-image lazy loading (for divs) -->
+      <article class="card">
+        <div
+          class="bg"
+          data-bg="https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=1600&auto=format&fit=crop"
+        ></div>
+        <div class="meta">
+          <strong>Background-image lazy</strong>
+          <div class="hint">
+            Use when images are CSS backgrounds (hero sections, cards).
+          </div>
+        </div>
+      </article>
+
+      <!-- 4) Long list to demonstrate off-screen loading -->
+      <article class="card">
+        <div class="skeleton" style="height: 220px"></div>
+        <div class="meta">
+          <strong>Scroll to load more</strong>
+          <div class="hint">
+            This card is intentionally simple to keep focus on lazy patterns.
+          </div>
+        </div>
+      </article>
+    </main>
+
+    <footer>
+      Demo includes:
+      <ul
+        style="
+          display: inline-block;
+          text-align: left;
+          list-style: none;
+          padding: 0;
+          margin: 0.5rem 0 0 0;
+        "
+      >
+        <li>- Native <code>loading="lazy"</code></li>
+        <li>- IntersectionObserver fallback for fine-grained control</li>
+        <li>- CSS skeleton and blur-up transition for nicer UX</li>
+      </ul>
+    </footer>
+
+    <script>
+      // ---------- Helper: load image and mark as loaded ----------
+      function markImageLoaded(img) {
+        img.addEventListener("load", () => img.classList.add("loaded"), {
+          once: true,
+        });
+        // if already cached and complete
+        if (img.complete && img.naturalWidth !== 0) img.classList.add("loaded");
+      }
+
+      // ---------- 1) Activate native example (swap data-full into src) ----------
+      (function nativeExample() {
+        const img = document.querySelector(".native");
+        if (!img) return;
+        const full = img.getAttribute("data-full");
+        if (full) {
+          img.src = full; // browser will respect loading="lazy"
+        }
+        markImageLoaded(img);
+        // remove skeleton visually (optional)
+        const sk = document.getElementById("native-skel");
+        if (sk) sk.style.display = "none";
+      })();
+
+      // ---------- 2) IntersectionObserver lazy loading for <img> with data-src ----------
+      (function ioImages() {
+        const lazyImages = Array.from(document.querySelectorAll("img.lazy-io"));
+        if (lazyImages.length === 0) return;
+
+        const onLoad = (img) => {
+          markImageLoaded(img);
+          const sk = document.getElementById("io-skel");
+          if (sk) sk.style.display = "none";
+        };
+
+        if ("IntersectionObserver" in window) {
+          const io = new IntersectionObserver(
+            (entries, obs) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  const img = entry.target;
+                  const src = img.getAttribute("data-src");
+                  if (src) {
+                    img.src = src;
+                    img.removeAttribute("data-src");
+                    onLoad(img);
+                  }
+                  obs.unobserve(img);
+                }
+              });
+            },
+            { rootMargin: "200px 0px" }
+          );
+
+          lazyImages.forEach((img) => io.observe(img));
+        } else {
+          // Fallback: simple eager load when IO not available
+          lazyImages.forEach((img) => {
+            const src = img.getAttribute("data-src");
+            if (src) img.src = src;
+            onLoad(img);
+          });
+        }
+      })();
+
+      // ---------- 3) IntersectionObserver for background-image elements ----------
+      (function ioBackgrounds() {
+        const bgEls = Array.from(document.querySelectorAll("[data-bg]"));
+        if (bgEls.length === 0) return;
+
+        function setBg(el, url) {
+          // set a tiny placeholder background first (optional)
+          el.style.backgroundImage = `url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22120%22 height=%2272%22><rect width=%22100%25%22 height=%22100%25%22 fill=%22%23eaeef6%22/></svg>')`;
+          // create an Image to preload and transition
+          const img = new Image();
+          img.src = url;
+          img.onload = () => {
+            el.style.backgroundImage = `url('${url}')`;
+            el.classList.add("loaded");
+          };
+        }
+
+        if ("IntersectionObserver" in window) {
+          const io = new IntersectionObserver(
+            (entries, obs) => {
+              entries.forEach((ent) => {
+                if (ent.isIntersecting) {
+                  const el = ent.target;
+                  const url = el.getAttribute("data-bg");
+                  if (url) setBg(el, url);
+                  obs.unobserve(el);
+                }
+              });
+            },
+            { rootMargin: "300px 0px" }
+          );
+          bgEls.forEach((el) => io.observe(el));
+        } else {
+          bgEls.forEach((el) => setBg(el, el.getAttribute("data-bg")));
+        }
+      })();
+
+      // Accessibility/perf tip: if user prefers reduced motion, reduce transitions
+      (function preferReduce() {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          document
+            .querySelectorAll("img, .bg")
+            .forEach((el) => (el.style.transition = "none"));
+        }
+      })();
+    </script>
+  </body>
+</html>
